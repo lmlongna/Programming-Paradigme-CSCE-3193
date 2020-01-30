@@ -1,0 +1,59 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<style>
+		.toc {
+			margin-left: 30px;
+		}
+		.code {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+		.shell {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+	</style>
+</head>
+<body bgcolor="#E5B251"><br><br>
+<table align="center" cellpadding="50" border="1" bgcolor="#F5C261" width="720"><tbody><tr><td>
+
+<h1>Assignment 10</h1>
+
+
+<ol>
+	<li><b>Please note that this assignment cannot be turned in late for credit!  There is also no resubmit option for this assignment.</b>  For this assignment, you will be creating a dynamic web site using Python Flask which outputs a series of web pages that contain both HTML and JavaScript.  The series of web pages will first ask the user to fill out a form with some basic information and use a JavaScript function to validate the form data before submission, then play a guessing game by selecting a random number and having the user guess until getting it correct.</li><br>
+
+	<li>For instructions on how to set up a project in Flask, see <a href="http://flask.pocoo.org/docs/1.0/quickstart/">http://flask.pocoo.org/docs/1.0/quickstart/</a>. Name your main project file assignment10.py. Set the route for the pages generated to be "/assignment10.html" (i.e. it should be possible to access the pages via the url <a href="http://localhost:5000/assignment10.html">http://localhost:5000/assignment10.html</a>). Your web site should only contain only a single Python script, but may contain one or more HTML files in a "templates" subdirectory.</li></br>	
+	
+	<li>Have your web site initially return an HTML page which presents the user with a form that asks for their first name and last names.  The values for those input fields should be set to your own first and last names by default.  This form should use the "GET" method and should send its data back to the same location (i.e. "assignment10.html").  However, before the form data can be submitted it must be validated by a JavaScript function.  This function should only return true (allowing the form submission) if: 
+		<ol><li>The first name is not blank AND</li>
+		    <li>The last name is not blank</li></ol>
+	If either of those fields is empty, an error message explaining the error should be displayed on the page below the form and the form should not be submitted (until the form data is corrected).</li><br>
+	
+	<li>Once the user has correctly submitted the first form, the web site should return to them a new HTML page which includes the sentence "Hi FIRSTNAME LASTNAME!" (with the correct name values from the previous form inserted).  It should then instruct the user to guess a number from 1 to 5 and present a form with a single visible input element for their guess and a submit button.  However, before sending that page to the browser, the server should have generated a random number from 1 to 5 and included that "answer" as a hidden input field of the form.  (If you're unsure of how to use hidden input fields, just google "HTML form hidden field".  Also, you can google to figure out how to generate a random number within a given range in Python.)  This form should also send its data to the same page (assignment10.html), but it must use the "POST" method.</li><br>
+	
+	<li>Once the user has submitted the form with a guess, the web site should determine if that guess was correct (by comparing the value of the guess input field with that of the hidden answer input field).  If it was not correct, it should send the browser a page saying that the guess was incorrect and present them with the same form for another guess (including the SAME hidden answer that was initially generated before the first guess).  If the guess was correct, it should send the browser a page with no input forms but only a message saying that they guessed correctly.</li><br>
+
+	<li>Compress your assignment10.py file as well as your templates subdirectory and the files it contains (if you used templates) into a single zip file named assignment10.zip and submit it on Blackboard.</li></br>
+	
+	<li>Here is the rubric the grader will use, so make sure your web site meets each of these requirements <b>when run on the virtual machine configured following the directions previously posted on the course site:</b>:</p>
+		<ol>
+			<li>(5 points) Does the Python file have the correct name?</li>
+			<li>(5 points) Does the web site serve the pages via the url http://localhost:5000/assignment10.html?</li>
+			<li>(15 points) Does the page initially display a form asking for first name and last name, without including the form for guesses or other incorrect information?</li>
+			<li>(10 points) Is there a JavaScript form validation function which correctly prevents the form from being submitted and which displays an error message when one of the fields is blank?</li>
+			<li>(5 points) If the form data is valid, is the form submitted via the "GET" method?</li>
+			<li>(15 points) When the server receives valid data for the first form, does it correctly return a page with only the form for the user's guess (and not the original form or other incorrect data)?</li>
+			<li>(10 points) Does the form contain a hidden input field which contains the "answer", which is the number from 1 to 5 randomly selected by the server?</li>
+			<li>(5 points) When the user makes a guess and submits the guess form, is it sent via the "POST" method?</li>
+			<li>(10 points) If the user's guess is correct, is a message displayed on the resulting page telling them so, but no other forms or incorrect data is included?</li>
+			<li>(20 points) If the user's guess is incorrect, is a page returned which tells them so and which includes the form for their next guess?  The form should include the SAME answer as before the original guess.  No other forms or incorrect data should be displayed.</li>
+		</ol>
+		</li><br><br>
+</ol>
+
+</td></tr></tbody></table>
+
+</body></html>

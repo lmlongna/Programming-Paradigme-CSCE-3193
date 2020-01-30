@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<title>Assignment10</title>
+     <body bgcolor=" aqua">
+     	<h1> Welcome to CSCE 3193 Assignment 10!</h1>
+     	<p>Please fill out the form below to begin a super fun game.</p>
+       <form name="form1" action="assignment10.html" method="GET" onsubmit="return validateForm1()">
+         First name: <input type="text" name="firstName" value="Lambert"/> <br />
+         Last name: <input type="text" name="lastName" value="Longnang" /> <br />
+         <input type="submit" />
+       </form>
+       <p id = validationMessage> </p><script>
+ function validateForm1() {
+     var firstName = document.forms["form1"]["firstName"].value;
+     var lastName = document.forms["form1"]["lastName"].value;
+
+     if ((firstName == '') && (lastName == '')){
+      document.getElementById("validationMessage").innerHTML="The first name and last name fields must not be empty."
+      return false;
+     }
+    
+     else if (firstName == "") {
+         document.getElementById("validationMessage").innerHTML="The first name field must not be empty.";
+         return false;
+     }
+     else if (lastName == "") {
+         document.getElementById("validationMessage").innerHTML="The Last name field must not be empty.";
+         return false;
+     }
+    
+     return true;
+  }
+
+ //   function validateForm2() {
+ //     var guess = document.forms["form2"]["guess"].value;
+ //    if( (POST['guess']) && (POST['guess'] == POST['answer']) ) 
+ //     <p> Congratulations! Your guess was correct. </p>
+  // }
+ </script>
+</body>
+</html>

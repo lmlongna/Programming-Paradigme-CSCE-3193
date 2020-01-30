@@ -1,0 +1,143 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<style>
+		.toc {
+			margin-left: 30px;
+		}
+		.code {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+		.shell {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+	</style>
+</head>
+<body bgcolor="#d8ccdb"><br><br>
+<table align="center" cellpadding="50" border="1" bgcolor="#e8dceb" width="720"><tbody><tr><td>
+
+<h1>Assignment 2</h1>
+
+<p>In this assignment, you will create a Java program containing three classes named GasTank, Engine, and Auto. These classes will be used to create Auto objects which can execute methods to compute locations and fuel levels after driving given distances and directions.</p>
+
+<ol>
+	<li>The GasTank class represents an object to keep track of the current and maximum levels of fuel. It must:
+		<ul>
+			<li>have a private instance variable that keeps track of an integer (maximum) capacity</li>
+			<li>have a private instance variable that keeps track of a double (current) level</li>
+			<li>have a constructor which takes one argument, an int, which is used to set the instance variable for capacity (but if a negative value is passed in it gets set to 0), while the current level is initialized to 0</li>
+			<li>have the following member functions implemented:<br>
+<pre>		public int getCapacity()
+		public double getLevel()
+		public void setLevel(double levelIn)
+</pre>
+			<li>the "get" functions should return the capacity and level</li>
+			<li>the "set" function should take a double argument to set the level, but if the argument is below 0 it gets set to 0, or above the capacity it gets set to the capacity</li>
+		</ul>
+	</li><br><br>
+	
+	<li>The Engine class represents an engine object and stores a few attributes of the engine. It must:
+		<ul>
+			<li>have a private instance variable which stores a String description of the engine (e.g. "V8")</li>
+			<li>have a private instance variable that keeps track of the integer miles per gallon (mpg) value</li>
+			<li>have a private instance variable that keeps track of the integer maximum speed value</li>
+			<li>have a constructor which takes three arguments (a String and 2 integers) which are used to initialize the three instance variables.  If the String argument has length 0, the description should be set to the value "Generic engine", and if either integer argument is negative, the corresponding instance variable should be set to 0.</li>
+			<li>have public "get" functions to return each of the description, mpg, and max speed.  The function that returns the description should return the String description as well as the mpg and max speed, clearly labeled (e.g. "V6 (MPG: 20, Max speed: 120)")</li>
+		</ul>
+	</li><br><br>
+	
+	<li>The Auto class represents a auto object which contains an engine and a gas tank, and has methods that allow it to keep track of its location and fuel level while being "driven". It must:
+		<ul>
+			<li>have a private instance variable which stores a String description of the auto (e.g. "Sweet Ride")</li>
+			<li>have private instance variables that keep track of integer values for the x-coordinate and y-coordinate (and are initialized to 0)</li>
+			<li>have a private instance GasTank variable</li>
+			<li>have a private instance Engine variable</li>
+			<li>have a constructor which takes as arguments a String description, an integer for the maximum fuel capacity, and an Engine object reference (in that order).  If the description is length 0, the corresponding instance variable should be set to "Generic auto", and if a null reference is passed in for the Engine parameter, a new Engine should be created with an empty description and 0's for all values.</li>
+			<li>have the following member functions implemented:<br>
+<pre>		public String getDescription()
+		public int getX()
+		public int getY()
+		public double getFuelLevel()
+		public int getMPG()
+		public void fillUp()
+		public int getMaxSpeed()
+		public double drive(int distance, double xRatio, double yRatio)
+</pre>
+			</li>
+			<li>getDescription() should return the description of the auto as well as the description of its Engine, fuel level and capacity, and location, all clearly labeled (e.g. "Sweet Ride (engine: V6 (MPG: 20, Max speed: 120)), fuel: 0.00/15, location: (0,0)")</li>
+			<li>fillUp() should cause the gas tank to be filled to its maximum capacity</li>
+			<li>drive(int distance, double xRatio, double yRatio) should take the desired distance to travel as an integer, and two double values which, together, specify the direction as a ratio of horizonal to vertical distances.  For example, if xRatio = 1 and yRatio = 2, for every 1 unit to the right (positive x), the auto would travel 2 units up (positive y).  Negative values for xRatio and yRatio correspond to moving left and down, respectively.  Given the distance and direction, this method should correctly compute the ending coordinates (truncated to integers).  It should also correctly subtract the amount of fuel used.  If the distance specified requires greater than the amount of fuel than the auto currently has, the auto should travel as far as it can until it is empty and print this text to the console:  "Ran out of gas after driving x miles." (with the correct value substituted in for x).  The method should return the number of miles which were actually driven.<br>
+		</li>
+		<li>All double values which are printed out to the console should be formatted so that exactly 2 decimal places are displayed.</ul>
+	</li><br><br>
+
+	<li>Test your work. An example class named AutoTest.java is provided (on the course site along with assignment 2) to help you test your code.
+		Your classes must work with it, i.e. they must all compile correctly together and AutoTest.java should work correctly when executed. However, when grading we will use more and/or different test cases, so you should also test
+		various additional cases. Do not submit AutoTest.java. Here is the output that my implementation gives with this file:
+<pre class="shell">
+Tank level: 10.00
+
+Engine1: V6 (MPG: 20, Max speed: 120)
+
+Auto1: Auto1 (engine: V6 (MPG: 20, Max speed: 120)), fuel: 0.00/15, location: (0,0)
+
+Auto2: Generic auto (engine: Generic engine (MPG: 0, Max speed: 0)), fuel: 0.00/0, location: (0,0)
+
+Auto3: Auto3 (engine: V6 (MPG: 20, Max speed: 120)), fuel: 0.00/50, location: (0,0)
+Auto3: Auto3 (engine: V6 (MPG: 20, Max speed: 120)), fuel: 50.00/50, location: (0,0)
+Auto3 drove 600.00 miles
+Auto3: Auto3 (engine: V6 (MPG: 20, Max speed: 120)), fuel: 20.00/50, location: (-480,-360)
+Auto3 drove 300.00 miles
+Auto3: Auto3 (engine: V6 (MPG: 20, Max speed: 120)), fuel: 5.00/50, location: (-230,-193)
+Ran out of gas after driving 100.00 miles.
+Auto3 drove 100.00 miles
+Auto3: Auto3 (engine: V6 (MPG: 20, Max speed: 120)), fuel: 0.00/50, location: (-130,-193)
+Auto3 drove a total of 1000.00 miles.
+
+
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 0.00/30, location: (0,0)
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 30.00/30, location: (0,0)
+Auto4 drove 100.00 miles
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 26.67/30, location: (70,70)
+Auto4 drove 200.00 miles
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 20.00/30, location: (-115,144)
+Auto4 drove 300.00 miles
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 10.00/30, location: (153,278)
+Ran out of gas after driving 300.00 miles.
+Auto4 drove 300.00 miles
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 0.00/30, location: (287,9)
+Ran out of gas after driving 0.00 miles.
+Auto4 drove 0.00 miles
+Auto4: Auto4 (engine: V4 (MPG: 30, Max speed: 100)), fuel: 0.00/30, location: (287,9)
+Auto4 drove a total of 900.00 miles.
+</pre>
+		Note that if your values are within 1.0, that is sufficient.
+		</li><br><br>
+
+	<li>Submission: You must submit a zip archive containing exactly these files: GasTank.java, Engine.java, and Auto.java. Do not submit any files other than a single archive named Assignment2.zip containing these three, and be sure it contains exactly these three.</li><br><br>
+
+<li>
+Here is the rubric the grader will use when running your code with a different version of a file similar to AutoTest.java, so make sure your code meets each of these requirements.  Please keep in mind that this is a very large class and the TA does not have time to fix your code, rename files, etc.:
+<ol>
+	<li>-25%:      Submitted file is not named Assignment2.zip
+	<li>-90%:      User files do not compile on their own</li>
+	<li>-50%:      AutoTest.java does not compile with submitted files (but user submitted files compile on their own)</li>
+	<li>-50%:      AutoTestGrader.java (the version of the test file used by the grader) does not compile with submitted files (but user submitted files compile on their own)
+	<li>-20%:      wrong files submitted (but compilation works, which means that one of them must at least have been Auto.java)</li>
+	<li>-35%:      Auto class does not use instances of GasTank and Engine classes</li>
+	<li>-5% each:  GasTank isn't correctly instantiated</li>
+	<li>-5%:	GasTank doesn't correctly set level</li>
+	<li>-5% each:  Engine isn't correctly instantiated</li>
+	<li>-5% each:  Auto isn't correctly instantiated</li>
+	<li>-5% each:  Auto fill up does not work correctly</li>
+	<li>-5% each:  Auto drive does not result in correct coordinates</li>
+	<li>-5% each:  Auto drive does not correctly update the fuel level</li>
+</ol>
+</li>
+
+</ol></td></tr></tbody></table>
+
+</body></html>

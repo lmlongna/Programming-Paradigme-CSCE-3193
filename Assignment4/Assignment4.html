@@ -1,0 +1,82 @@
+
+<!-- saved from url=(0060)http://uaf46365.ddns.uark.edu/paradigms/a4/instructions.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<style>
+		.toc {
+			margin-left: 30px;
+		}
+		.code {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+		.shell {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+	</style>
+</head>
+<body bgcolor="#d8ccdb"><br><br>
+<table align="center" cellpadding="50" border="1" bgcolor="#e8dceb" width="720"><tbody><tr><td>
+
+<h1>Assignment 4</h1>
+
+<ol>
+	<li>Download the "driving.zip" starter kit. Extract, build ("javac *.java") and run it ("java Controller"). You should see a smiley face which moves slowly from the top left corner diagonally down and right.<br><br>
+		If you get an exception saying it cannot find the file "smiley.jpg", make sure you know what directory you are executing within. Here is a command to print the current working directory:
+<pre class="code">System.out.println("cwd=" + System.getProperty("user.dir"));
+</pre>
+		You should make sure that the image file is in that directory..
+		</li><br><br>
+
+	<li>This code uses a "Model-View-Controller" architecture. This is a good general structure for many programs. Specifically, it is usually a good idea to keep your views and your models well-separated. Examine the code and see how much of it you can understand (but it is expected that you won't currently follow all of it).</li><br><br>
+
+	<li>The Sprite class is used to create objects which have images associated with them that can be drawn to the window and moved around.  Modify the Model class to store an ArrayList (from the package java.util.ArrayList) of Sprites (i.e. "ArrayList&ltSprite&gt"), rather than just a single Sprite. Make the Model.update method call Sprite.update for each Sprite in the ArrayList. To test it, put two or three Sprites in the ArrayList, each in different locations. Get this much working before you proceed.</li><br><br>
+	
+	<li>Go back to having the Model class initially create only a single Sprite at location (0,0) (but it should still have an ArrayList of Sprites).  Add a new method to the Model class which takes as parameters two integers, x and y, and which creates a new Sprite and puts it at location (x,y) when called, also adding it to the ArrayList.  Then, in the Controller class, find the method which responds to mouse clicks and modify it so that when the left mouse button is clicked, it calls your new function in the Model class to add a new Sprite in the location of the click.  (Hint:  You will want to read about the java MouseEvent class to find out how to get the coordinates of the click.)</li><br><br>
+
+	<li>It's time to change the smiley faces to autos.  Copy your correctly working Auto.java, Engine.java, and GasTank.java files from assignment 3 into the same directory as Sprite.java, etc. Make your Auto class inherit from Sprite.  Notice that both classes have their own locationX and locationY instance variables. Therefore, delete those instance variables and the associated "getter" functions from the Auto class.  Since those variables are private in the Sprite class, you may need to modify your Auto class to access them appropriately.  Also, the constructor of Auto will need to correctly call the constructor of Sprite.  To do so, pass "red-auto.jpg" as the value for the parameter "jpgName".  Modify the Model class to make Auto objects instead of Sprites (everywhere). For now, you can specify whatever parameters you want for the Auto constructor. Note that the Model class should still be creating an ArrayList of Sprites, not Autos.  Get this to compile and work correctly before proceeding.</li><br><br>
+	
+	<li>Now let's leverage polymorphism.  Add an "update" method to the Auto class, with the exact same signature as that of the Sprite class. (Hint: For this, you will need to add an import statement to the Auto.java file.)  Move the code that causes the Sprite's location to change from the Sprite's update method to the Auto's, but leave the code that draws the image in the Sprite's method. The Auto's update method should first cause the Auto's location to change, and then should call the update method of Sprite (Hint: which is its parent class).  Now, when you execute your code you should see red autos instead of smiley faces.  Notice that the Model class still creates an ArrayList of generic Sprite objects, and that list is now being filled with Auto objects, which is a subclass of Sprite.  Also, in the update method of Model, the update method of each Sprite is being called.  However, since they are also Autos, and Auto has its own version of update, that is the one which is called.  This is polymorphism!</li><br><br>
+	
+
+	<li> Time for a bit of variety.  Add an additional parameter to the constructor for Auto, a String, which is the jpgName passed to the Constructor of Sprite (instead of just using "red-auto.jpg").  Create the following two classes, which are each subclasses of Auto:  CopAuto and RobberAuto.  Each should have a constructor which takes no arguments, and should call the constructor of the parent class correctly as follows.  CopAutos should have 30 gallon gas tanks, get 30 miles per gallon, have top speeds of 100, and use the jpg "cop-auto.jpg".  RobberAutos should have 20 gallon tanks, get 20 miles per gallon, have top speeds of 200, and use the jpg "red-auto.jpg".  You can use whatever you like for the String descriptions of the auto and engine.  Modify the Model class so that it alternates between creating CopAuto and RobberAuto objects, with the first one being a CopAuto, then a RobberAuto, etc.</li><br><br>
+ 
+	<li>Let's make the autos move differently.  In each of the CopAuto and RobberAuto classes, create an "update" method with the same signature as those for Sprite and Auto (which will again force you to add an import statement in each file).  Modify the body of the update method of Auto to no longer change the position but only call "update" of Sprite.  Now, in the RobberAuto class, create two private integer instance variables, one to be used for an xRatio and one for a yRatio.  In the constructor of RobberAuto, set each to a random value between -5 and 5.  (Hint: read about the Random class in java.util.Random, especially the "nextInt" method.)  In the "update" method of the RobberAuto class, have the x coordinate change by the value of xRatio and the y coordinate by the y ratio (instead of 1 and 1).  When this is working, you should see each red auto moving in a random direction, and the cop autos still all moving in the same direction. (Note that occasionally both random numbers for a auto could be 0, causing the auto not to move at all.  That is okay.)</li><br><br>
+	
+	<li>In the CopAuto class, also create private integer instance variables for the xRatio and yRatio, but make these variables static.  Have them initialized and used in the same way as those in the RobberAuto.  When this is working, you should see that all cop autos move in the same direction, which randomly changes when each new cop auto is created.</li><br><br>
+	
+	<li>Time to utilize the "drive" method of Auto.  First of all, in the constructors of RobberAuto and CopAuto, make sure that Auto's method to fill up the gas tank is called.  Then, modify the "update" method of RobberAuto to no longer directly change the x and y coordinates, but to call "drive" with a distance of 40 and the relevant xRatio and yRatio.  For the CopAuto, cause "update" to do the same but only drive a distance of 20.  When running and creating autos, you should now see the same patterns of motion except that the RobberAutos are moving faster than CopAutos, and sometimes autos run out of gas while still on the screen and stop moving.</li><br><br>
+
+	<li>Finally!  Make the necessary modifications to cause all autos to have their gas tanks filled up when the right mouse button is clicked.  (Hint: This should require no changes to the Sprite, Auto, CopAuto, or RobberAuto classes.  However, you may need to cast a Sprite object as a Auto object.  An example of such explicit casting can be found <a href="http://www.xyzws.com/javafaq/when-is-an-explicit-object-reference-casting-is-required/35">here</a>.)</li><br><br>
+
+	<li>For the final version:  When you start your program there should be one CopAuto, moving in a random direction. Each time you left-click the mouse, a new auto is added. This alternates between RobberAutos and CopAutos. The RobberAutos should be moving faster than the CopAutos and each of them in its own random direction.  The CopAutos should all move in the same direction, which changes randomly whenever a new CopAuto is created.  Autos should periodically run out of gas and stop moving (although sometimes they will be off of the screen and this won't be visible).  Each time you right-click the mouse, all autos should be filled up again and move around in the proper directions until again running out of gas.  You can download and run the sample solution in Assignment4-example-solution.zip for an example.  Simply download the zip file, unzip it, and from the directory with the unzipped files run the command "java Controller".</li><br><br>
+
+	<li>Submit your Assignment4.zip file in the usual manner. The zip file should contain your source files (.java), image files, and no other files.  The (only) included source files should be: Controller.java, Model.java, View.java, Sprite.java, Auto.java, CopAuto.java, RobberAuto.java, GasTank.java, and Engine.java.  The image files should be: cop-auto.jpg and red-auto.jpg. Do not submit any other files (i.e. no .class files). Test your zip file before you submit it by extracting into a separate folder, compiling, and running. Remember that your classes should not be contained in a package (other than the default package, which requires no "package" statement in your source).</li><br><br>
+
+	<li>
+	Here is the rubric the grader will use when running your program.  Make sure your code meets each of these requirements.  Please keep in mind that this is a very large class and the TA does not have time to fix your code, rename files, etc.:<br><br>
+	<ol>
+
+	<li>-25%: Submitted file is not named Assignment4.zip
+	<li>-90% Code does not compile</li>
+	<li>-20% Incorrect files contained in the zip file</li>
+	<li>-20% A new CopAuto or RobberAuto does not appear each time you left-click, alternating each time</li>
+	<li>-15% RobberAutos don't start where you left-click and move in random slopes, with each moving in its own random slope</li>
+	<li>-15% CopAutos don't start where you left-click and move in random slopes, with all CopAutos moving in the same slopes as the most recently created CopAuto</li>
+	<li>-10% Autos of either type never run out of gas (without right-clicks)</li>
+	<li>-5% RobberAutos don't move more quickly than CopAutos</li>
+	<li>-10% Right-clicking doesn't cause autos that ran out of gas to resume moving</li>	
+	<li>-10% The ArrayList in the Model class doesn't use generics. (That is, it doesn't use an ArrayList&lt;Sprite&gt;, as opposed just an ArrayList)</li>
+	<li>-10% The code doesn't use polymorphism. (That is, the Model.update() method doesn't call the update() method on a Sprite object.)</li>
+	<li>-10% The Auto class defines its own x and y coordinate instance variables</li>
+	<li>-2% (each) Missing name, date, or assignment description from comments at the top of every file.</li>
+	</ol>
+	</li>
+
+</ol>
+
+</td></tr></tbody></table>
+
+</body></html>

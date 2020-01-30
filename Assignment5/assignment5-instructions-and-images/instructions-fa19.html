@@ -1,0 +1,132 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<style>
+		.toc {
+			margin-left: 30px;
+		}
+		.code {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+		.shell {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+	</style>
+</head>
+<body bgcolor="#d8ccdb"><br><br>
+<table align="center" cellpadding="50" border="1" bgcolor="#e8dceb" width="720"><tbody><tr><td>
+
+<h1>Assignment 5</h1>
+
+
+<ol>
+	<li>Make a new copy of your source code from your correctly working assignment 4.  We will modify and add to this to create assignment 5.  Also note that the additional necessary image files "bank.png" and "jail.jpg" are attached to this assignment.</li></br></br>
+
+	<li>Implement a new Bank class which extends Sprite and uses bank.png.  It should not move and always be located at position (300,300).</li></br></br>
+	
+	<li>In the constructor of Model, make it create a single Bank (rather than a CopAuto) and add it to the ArrayList of Sprites.  That should be the only Sprite initially created and added to the ArrayList.</li></br></br>
+
+	<li>In the Sprite class, change the "public void update(Graphics g)" method to "public void updateImage(Graphics g)", and do the same in the Auto and Bank classes.  (Note: You're just changing the names, not what they do.)  Also, in the Sprite class add a new method "public void updateState()" which has an empty body (i.e. it does nothing). In the CopAuto, and RobberAuto classes, create two new methods, "public void updateState()" and "public void updateImage(Graphics g)".  You should split up the functionality of the "public void update(Graphics g)" method into those methods, and then delete the "public void update(Graphics g)" method.  The updateState methods should cause the autos to drive, but not draw the images, and the updateImage methods should cause the images to be drawn but not drive the autos.  Once you've done that, modify the "update" method in Model to call "updateImage" on each Sprite.</li></br></br>
+	
+	<li>We are now going to pretend that fuel is no longer a factor, so modify both the CopAuto and RobberAuto classes so that when they are created, they have 5000 gallon tanks and are initially filled up.  Then, remove the method in Model which fills up all of the autos and change the Controller class so that on a right-click of the mouse, a method named "updateScene()" is called on the Model object. This "public void updateScene()" method needs to be created in the Model class and it should iterate over all sprites and call "updateState" for each.</li></br></br>
+	
+	<li>Now we will remove the timer that automatically updated the scene so we can eventually do that with threads.  Therefore, in the constructor of Controller, delete the line which creates a new Timer.  Then, in the method which handles the mouse presses, make sure that view.repaint() is called after any mouse click so that the any changes they cause are then drawn on the window </li></br></br>
+
+	<li>Make sure that you have all of this functionality working before proceeding.  Currently, when you run the program you should initially see only a Bank, which is placed at (300,300).  When you left click, it should alternate creating CopAutos and RobberAutos wherever you click.  When you right click, all autos should drive a short distance (with RobberAutos moving in their own random directions, and all CopAutos moving in the same direction).</li></br></br>
+
+	<li>Make the necessary changes so that whenever a RobberAuto is created (i.e. every other left-mouse click), it begins at the Bank - which is always at location (300,300).  They should still move as they previously did though, with each having its own random vector of motion, and CopAutos should still begin at the location of the left-click when created.</li></br></br>
+
+	<li>We're about to make the CopAutos and RobberAutos a bit more sophisticated, but first we need to provide them with a bit more information.  In the Controller, when "updateScene" is called due to a right mouse click, have it pass the width and height of the window as parameters to "updateScene". Those values can be found using "view.getWidth()" and "view.getHeight()".  Now, modify "updateScene" in Model and the Sprite and various auto classes to take those parameters (but for now they will do nothing with them).</li></br></br>
+	
+	<li>Let's make it a bit easier for the cops to catch the robbers!  Make the necessary code changes so that when a CopAuto hits the edge of the window, it "bounces" off the edge and back into the window.  This should be done so that all CopAutos keep sharing the same static xRatio and yRatio values (which still change each time a new CopAuto is created), but the direction of motion for any given CopAuto may be a negative version of each or both of those.  Hint: Each CopAuto instance can have its own instance variables specifying if it should move in the +xRatio or -xRatio, and +yRatio or -yRatio, directions.  Whenever a CopAuto attempts to move off of the window, the side(s) of the window which it was moving off determines which of those values needs to be changed to/from positive/negative.  This is where we'll use the width and height of the screen provided by the last step! [Note:  It's okay if they partially disappear off an edge before bouncing back.]</li></br></br>
+
+	<li>Add the method "public boolean overlaps(Sprite s)" to the Sprite class which takes a reference to a Sprite as a parameter and returns true if the image of the Sprite overlaps (at all) with the image of s.  Note that the image for each Sprite is 60 x 60 pixels and its x and y coordinates specify its top left corner.</li></br></br>
+	
+	<li>Modify the updateScene method of Model so that whenever a CopAuto overlaps a RobberAuto, the word "Gotcha!" is printed to the console. [HINT: use the "instanceof" operator]  Make sure this is working before continuing.</li></br></br>
+
+	<li>Add a method "public void captured()" to RobberAuto which causes a RobberAuto to change its image to jail.jpg and causes it to stop moving. Also add a method "public boolean isCaptured()" which will return true if and only if the RobberAuto has been captured. If you need to also add additional instance variables, that is fine.  Add a variable of the necessary type and scope to RobberAuto which can be used to keep track of the total number of RobberAutos which have been captured and make sure that it is correctly updated when captured is called.  Note that any individual instance of a RobberAuto should be able to be captured at most once, meaning that if a RobberAuto has been marked as captured, if later another CopAuto (or even the same) overlaps with it the count of captured autos should not increase.  Instead of printing "Gotcha!", when updateScene in Model detects that a CopAuto overlaps with a RobberAuto, it should now call captured on the RobberAuto.</li></br></br>
+
+	<li>Modify the updateState method of RobberAuto to detect if the image has moved completely out of the window.  If so, it should increment a variable (which you will need to add) that keeps track of how many RobberAutos have "escaped". Add a method "public boolean hasEscaped()" which returns true if and only if the instance has escaped, and also add a variable of the necessary type and scope to RobberAuto which can be used to keep track of the total number of RobberAutos which have escaped and make sure that it is correctly updated.  Note that any individual instance of a RobberAuto should be able to escape at most once.</li></br></br>
+	
+	<li>Modify the "updateScene" method in Model so that it checks to see if a RobberAuto has escaped (using the above method), and if so, removes that Sprite from the collection.  Also make it print "I'm free!" to the console.  Note that you will need to use an iterator for the sprites collection to safely remove elements while iterating over them (<a href="http://docs.oracle.com/javase/tutorial/collections/interfaces/collection.html">http://docs.oracle.com/javase/tutorial/collections/interfaces/collection.html</a>).  Otherwise, removing elements from a collection while you are iterating over it causes errors.  (Feel free to check it out!  It's great experience to intentionally cause bugs so you can observe the way that they are manifested and reported.)  Also, be careful if you are using nested loops and nested iterators!<br><br>
+	
+	Example use of an iterator:
+	<pre class="code">Iterator<Sprite> iter = sprites.iterator();
+while (iter.hasNext()) {
+    Sprite s = iter.next();
+    ...
+</pre>
+
+	<li>Now to add handling for key presses!  Augment the Controller class so that, along with the MouseListener interface, it also implements the necessary interface to listen for key events. (Note that in Java, although a class can only extend one other class, it is allowed to implement multiple interfaces.)  Use google or your book to figure out which interface that is and find the documentation for that interface.  Then, correctly register the key listener with the View class so it knows what will be processing those events.  Note that the mouse listener was added to the JPanel subclass MyPanel, but to correctly process keyboard events the key listener must be registered with the JFrame subclass View.  To make sure you've done it correctly, modify the keyTyped method in Controller to print "hello world" to the console when "h" is pressed.</li></br></br>
+
+	<li>Add to the keyTyped method so that when "n" is pressed, a line is printed to the console which clearly tells how many robbers have been captured and how many have escaped.</li></br></br>
+
+	<li>At this point, as you right-click the mouse the images should move around, and whenever a CopAuto and a RobberAuto run into each other, the RobberAuto turns into a jail image and stops moving around.  Left-clicks alternate at creating new RobberAutos (which begin at the bank) and CopAutos (which begin where you clicked).  Pressing "n" should give you an update of how many robbers have been captured and escaped.  Get this much working before you proceed.</li><br><br>
+
+	<li>In the Model class, create a method "public void initialize()" which sets the ArrayList of Sprites to a brand new, empty list, adds the Bank again, and resets the number of RobberAutos which have been caught and escaped to 0.  Make your key listener call the "initialize" function in Model when the key "r" is typed (for "reset").  (If you want your window to automatically refresh after "initialize" is called, you can call "view.repaint()".).  <!--Note that you will need to modify the initialize function in Model so that all existing Sprites are discarded before adding new Sprites.--></li><br><br>
+
+	<li>Let's quickly tune our autos for the fast-paced world of multithreading.  In the "updateState" method of RobberAuto, set it to drive only a distance of 4, and for CopAuto set that to 2.  This will make it easier to follow the action in a bit.</li></br></br>
+	
+	<li>Time for multithreading!<br><br>For the final major addition, you are going to create a thread which will automatically update your scene (to save your fingers from all that clicking!).  Create a class named "SpriteMover" which implements the Runnable interface. The constructor should take a Model and a View as arguments, which it stores in instance variables.  Other than the constructor, the only function which must be implemented is "public void run()".  This function should consist of an infinite loop (i.e. one that never terminates) and which causes the thread to sleep for 2 milliseconds at the end of each iteration.  Before sleeping, it should use its Model reference to update the scene, and then its View reference to redraw the scene (i.e. repaint it).  Partial sample code is below.  Make sure that you completely understand all lines of this sample code before using it!!!</li><br><br>
+	
+	<pre class="code">
+public void run() {
+    while (true) {
+
+		... cause the scene to be updated here ...
+	
+		... cause the scene to be redrawn here ...
+		
+        try {
+            Thread.sleep(2);
+        } catch (InterruptedException e) {}
+    }
+</pre>
+
+	<li>To create and use a thread which uses your SpriteMover, in Controller add to your "keyTyped" method so that when "s" is typed, it creates a new Thread, using a new SpriteMover as the necessary argument to the constructor.  Then, call "start()" on that thread object. This will cause a new thread, which automates the motion of the scene, to be created each time you press "s".</li><br><br>
+	
+	<li>Now for thread-safety!<br><br>If you run your program now, you should see that after creating many autos and typing "s" (especially multiple times - creating multiple threads and speeding things up a lot) you get many exceptions of the type "java.util.ConcurrentModificationException".  This is because your ArrayList of sprites is being simultaneously accessed and modified by multiple threads:  your thread(s) which move them around, and the thread which handles the events (such as redrawing).  In order to fix this, ensure that every function which iterates over the ArrayList of Sprites synchronizes access to it by using a "synchronized" statement:
+	
+<pre class="code">
+synchronized(sprites)
+{
+    ... code to be synchronized here ...
+}
+</pre>
+
+This will ensure that if one thread is currently in a "synchronized" section which is accessing and/or modifying the ArrayList of Sprites, another thread will have to wait until the first thread is done before executing its "synchronized" section, providing thread-safety.  Once this is working, you're done!</li><br><br>
+
+	<li>Submit a zip file in the usual manner. The zip file should contain only your source files, image files, and a working build script which compiles your code and starts your application.
+		Do not submit any .class files, .jar files, or any other files. <b>Test your zip file before you submit it by extracting into a separate folder and running your
+		build script. </b>Remember that your classes should not be in a package other than the default package.</li><br><br>
+		
+	<li>
+	Here is the rubric the grader will use when running your program.  Make sure your code meets each of these requirements.  Please keep in mind that this is a very large class and the TA does not have time to fix your code, rename files, etc.:<br><br>
+	<ol>
+		<li>-90% Code does not compile</li>
+		<li>-20% Incorrect files contained in the zip file</li>
+		<li>-10% Build script does not correctly build and run your program</li>
+		<li>-10% The window doesn't begin with exactly a Bank at (300,300) and nothing else</li>
+		<li>-10% Left-clicking the mouse doesn't alternate between creating cops and robbers</li>
+		<li>-10% Robbers don't begin at the bank and then move in independent random directions</li>
+		<li>-10% Cops don't begin at the location of clicks and all move in the same direction (disregarding bouncing)</li>
+		<li>-10% Cops don't bounce off the walls correctly</li>
+		<li>-10% When a cop and robber collide, the robber doesn't turn into a jail and stop moving</li>
+		<li>-10% Pressing 'n' doesn't print a correctly computed number of escaped and captured robbers</li>
+		<li>-10% Pressing 'r' doesn't correctly reset the scene to only a bank, and reset the score</li>
+		<li>-10% Pressing 's' doesn't cause the scene to begin moving on its own</li>
+		<li>-10% It is possible to cause exceptions to occur after pressing 's' (especially "java.util.ConcurrentModificationException")</li>
+		<li>-10% A Thread object is not being created in the Controller using the SpriteMover class when 's' is pressed</li>
+		<li>-2% (each) Missing name, date, or assignment description from comments at the top of every file.</li>
+	</ol>
+	</li>
+
+
+</ol>
+
+</td></tr></tbody></table>
+
+</body></html>

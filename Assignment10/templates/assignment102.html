@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+   Hi there  {{fN}} {{lN}} !Let's play a super fun game!
+</head>
+<title>Assignment10</title>
+
+     <body bgcolor=" aqua">
+     	
+     	<p>I'm thinking of a number from 1 to 5. see if you can guess it!. </p>
+       <form name="form2" action="assignment10.html" method="POST">
+        Your guess: <input type="text" name="guess" >
+        <input type="hidden" name="answer" value= {{ number }} >
+         <input type="submit" value="Guess" >
+        
+       </form>
+       <p id = validationMessage> </p>
+    
+     </body>
+     </html>

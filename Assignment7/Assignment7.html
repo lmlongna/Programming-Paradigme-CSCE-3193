@@ -1,0 +1,66 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<style>
+		.toc {
+			margin-left: 30px;
+		}
+		.code {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+		.shell {
+			margin-left: 30px;
+			color:#000000;
+			background-color:#ffffff;
+		}
+	</style>
+</head>
+<body bgcolor="#edb6ca"><br><br>
+<table align="center" cellpadding="50" border="1" bgcolor="#fdc6da" width="720"><tbody><tr><td>
+
+<h1>Assignment 7</h1>
+
+
+<ol>
+	<li>For this assignment, you will be creating an HTML page with JavaScript functions and classes which mimic the functionality of your assignments 2 and 3.  That is, you will be creating Auto, Engine, and GasTank classes which can be used to create an Auto object, and then cause it to drive.  You must write your page "by hand", meaning that you are not allowed to use an HTML editor or application which writes HTML for you, and all code should be contained within a single file, which is the only file you will submit.</li><br><br>
+
+	<li>Create a file named FirstLast.html (where "First" is replaced with your first name and "Last" with your last name).  Create a title for your page (using the "title" tag) and a main heading (using the "h1" tag), both with the text "First Last's Assignment 7" (again substituting your name).</li><br><br>
+	
+	<li>Other than the heading, your page should originally only display a form which requests the data necessary to make an Auto.  The form should contain 5 text input fields and one button labeled "Create the auto".  The input fields should request:<ol><li>engine description</li><li>miles per gallon</li><li>max speed</li><li>auto description</li><li>max fuel capacity</li></ol>There should be text next to each input field specifying which data to enter into it.  Note:  For easier testing, you can set your input text fields to have default test values, and obviously these will be changed by the grader when grading.</li><br><br>
+	
+	<li>Set your form so that when the "Create the auto" button is pressed, a JavaScript function named "createAuto" is called.  Hint:  You can use an HTML "button" tag (probably the easiest), or an input element of type "submit" for the form.  If you choose the latter, use the "onsubmit" attribute of the form as follows:   onsubmit="return createAuto()".  Also, make sure that your "createAuto" function always returns false.  This will prevent the browser from "submitting" the form and then reloading the page after the submit button is pressed.<br><br>
+	
+	Make your "createAuto" function do something basic like call alert or console.log and display data from the form to ensure that you've got everything working up to this point.  Don't continue until you do.</li><br><br>
+	
+	<li>Create JavaScript classes Auto, GasTank, and Engine which have the same attributes and methods as those classes did in assignment 2.  They should be structured the same (e.g. the Auto class should contain 1 Engine and 1 GasTank object). Further, all attributes of each class should be "private" and the methods should all be "privileged" (see <a href="http://crockford.com/javascript/private.html">http://crockford.com/javascript/private.html</a> for details).</li><br><br>
+	
+	<li>Modify "createAuto" so that it gathers all of the necessary data from the form and uses it to create an Auto object and set all necessary values for it, as well as fill it up.  Have it call alert or console.log with the string returned by the "getDescription" method of the Auto class.  Make sure this is working before continuing.</li><br><br>
+
+	<li>Make another set of modifications to "createAuto" so that instead of displaying the auto's info in an alert popup or to the console, it prints that information to the HTML page, immediately below the form.  Everything else should remain, but this string should now appear too.  Additionally, a second form should appear below that which has three inputs to gather the following:<ol><li>miles to drive</li><li>x ratio</li><li>y ratio</li></ol>After the form should be a button with the text "Drive the auto".</li><br><br>
+
+	<li>When the "Drive the auto button" is pressed, a JavaScript function should be executed which calls "drive" on the previously created Auto object. [Hint: Obviously this means it must have been created in the correct scope.]  It should then display a new line of text on the HTML page, below this second form, which contains the output of "getDescription" called on the Auto object, thus showing its new location and gas level.  If the auto runs out of gas, an alert dialog box should appear with the same "out of gas" message as in assignment 2 (i.e. "Ran out of gas after driving x miles."  and x being set correctly.)</li></br></br>
+
+	<li>Submit a zip file containing a single HTML file in the usual manner. Test your file before you submit it by copying it to a new folder, unzipping it, and opening the HTML file in your Chrome web browser from that folder. Ensure that it works as expected.</li><br><br>
+
+	<li>Here is the rubric the grader will use, so make sure your page meets each of these requirements:
+		<ol>
+			<li>(-20 points) If anything other than a zip file containing a single HTML file was submitted.</li>
+			<li>(5 points) Does the HTML file have the correct name?</li>
+			<li>(5 points) Does the page have the correct title?</li>
+			<li>(15 points) Is the auto creation form correctly displayed with all necessary fields (and descriptions of the data to enter next to each) and one button?</li>
+			<li>(10 points) Does clicking on the button cause the auto description to appear?</li>
+			<li>(10 points) Does clicking on the button cause a new form to appear with the necessary fields to gather data for "drive" (and descriptions of the data to enter next to each) and one button?</li>
+			<li>(10 points) Does pressing this second button cause the correct message to be output below it?</li>
+			<li>(5 points)  If the auto runs out of gas, does an alert dialog box pop up with the correct message?</li>
+			<li>(10 points each) Is the output information computed correctly for all test cases?</li>
+			<li>(20 points) Does the JavaScript code correctly define and make use of Auto, Engine, and GasTank classes?</li>
+			<li>(10 point) Are the attributes of classes "private" and the methods "privileged"?</li>
+		</ol>
+		</li><br><br>
+
+</ol>
+
+</td></tr></tbody></table>
+
+</body></html>

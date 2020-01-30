@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+	<style>
+/*		li{ marging-top: 4pt}*/
+		body{background-color: aqua}
+	</style>
+
+<title>Lambert Longnang's Assignment7</title>
+</head>
+	
+
+<body >
+	
+	
+	<center><h1>Lambert Longnang's Assignment7</h1></center>
+	
+	<form >
+		<p>Please ennter the details of the Auto:</p>
+		<ul>
+			Engine description: &nbsp;&ensp; <input id="ed" type="text" value=" V6"><br> 
+			Miles per gallon: &emsp;&ensp;&nbsp; <input id="mpg" type="text" value="20"><br> 
+			Max speed: &emsp;&emsp;&emsp;&emsp; <input id="speed" type="text" value="120"><br> 
+			Auto description:&emsp;&ensp;&ensp;<input id="ad" type="text" value="Auto"><br> 
+			Max fuel capacity: &ensp;&ensp; <input id="capacity" type="text" value="200"><br>
+		</ul>
+        <input type="button" onclick="createAuto()" value="create The Auto">
+			
+	
+	</form>
+	<br>
+	
+	<p id="p1"> </p>
+	
+	<form hidden id="form">
+		<ul>
+        miles to drive: <input id="md" type="text" value="150"><br> 
+		x ratio: &emsp;&emsp;&emsp;<input id="x" type="text" value="4"><br> 
+		y ratio: &emsp;&emsp;&emsp;<input id="y" type="text" value="-5"><br>
+		</ul>
+        <input type="button" onclick="driveTheAuto()" value="drive The Auto">
+    </form>
+	<p id="p2"></p>
+
+	<script>
+		var engineNew;
+		var auto2;
+		
+		function driveTheAuto() {
+
+            var distance = auto2.drive(document.getElementById("md").value, document.getElementById("x").value, document.getElementById("y").value)
+            document.getElementById("p2").innerHTML = auto2.getDescription();
+
+        }
+		
+		function createAuto() {
+
+            engineNew = new Engine(document.getElementById("ed").value, document.getElementById("mpg").value, document.getElementById("speed").value);
+            auto2 = new Auto(document.getElementById("ad").value, document.getElementById("capacity").value, engineNew);
+
+
+            document.getElementById("p1").innerHTML = auto2.getDescription();
+            auto2.fillUp();
+            document.getElementById("form").hidden = false;
+
+            return false;
+
+        }
+		
+		function Auto(descriptionNew, capacityNew, engineNew) {
+            var x = 0;
+            var y = 0;
+            var description;
+            var gasTank = new GasTank(capacityNew);
+            var engine;
+
+            if (descriptionNew.length == 0)
+                description = "Generic auto";
+
+            else {
+                description = descriptionNew;
+            }
+
+            if (engineNew === null)
+                engine = new Engine(" ", 0, 0);
+            else {
+                engine = engineNew;
+            }
+            //this.gasTank = new GasTank(capacity);
+            this.getDescription = function() {
+                
+				//var level = gasTank.getLevel().toFixed(2);
+                descriptionNew = description + " (engine: " + engine.getDescription() + "), fuel: " +gasTank.getLevel().toFixed(2) + "/" + gasTank.getCapacity() + " location: (" + x + ", " + y + ")";
+                return descriptionNew;
+            }
+            this.getX = function() {
+                return x;
+            }
+            this.getY = function() {
+                return y;
+            }
+            this.getFuelLevel = function() {
+                return gasTank.getLevel();
+            }
+            this.getMPG = function() {
+                return engine.getMpg();
+            }
+            this.fillUp = function() {
+                gasTank.setLevel(gasTank.getCapacity());
+            }
+            this.getMaxSpeed = function() {
+                return engine.getMaxSpeed();
+            }
+            this.drive = function(distance, xRatio, yRatio) {
+               var gasLevel = (distance / engine.getMpg());
+                var m = Math.pow(xRatio, 2) + Math.pow(yRatio, 2);
+                if (gasLevel > gasTank.getLevel()) {
+					
+                    var distance = gasTank.getLevel() * engine.getMpg();
+                    
+                    alert("Ran out of gas after driving " + distance + " miles\n");
+					gasTank.setLevel(0);
+
+                    x = x + ((distance / Math.sqrt(m)) * xRatio);
+                    y = y + ((distance / Math.sqrt(m)) * yRatio);
+                } else {
+                    gasTank.setLevel(gasTank.getLevel() - gasLevel);
+
+                    x = x + ((distance / Math.sqrt(m)) * xRatio);
+                    y = y + ((distance / Math.sqrt(m)) * yRatio);
+                }
+                return distance;
+            }
+        }
+		
+		function GasTank(capacityNew) {
+			
+			var capacity;
+			var level =0;
+
+            if (capacityNew < 0) 
+                capacity = 0;
+            else 
+                capacity = capacityNew;
+            
+
+            //this.level = 0;
+
+            this.getCapacity = function() {
+                return capacity;
+            }
+            this.getLevel = function() {
+                return level;
+
+            }
+            this.setLevel = function(levelIn) {
+                if (levelIn < 0)
+                    level = 0;
+
+                if (levelIn > capacity)
+                    level = capacity;
+                else
+                    level = levelIn;
+            }
+        }
+
+		
+			function Engine(descriptionNew, mpgNew, maxSpeedNew) {
+			var description;
+			var mpg;
+			var maxSpeed;
+            this.description = descriptionNew;
+				
+            if (descriptionNew.length == 0)
+                description = " Generic engine";
+			else 
+				description = descriptionNew;
+
+           // this.mpg = mpg;
+            if (mpgNew < 0)
+                mpg = 0;
+			else
+				mpg = mpgNew;
+
+            maxSpeed = maxSpeedNew;
+            if (maxSpeedNew < 0)
+                maxSpeed = 0;
+
+
+
+            this.getDescription = function() {
+                var engine1 = description + " (MPG: " + mpg + ", Max speed: " + maxSpeed + ")";
+                return engine1;
+            }
+
+            this.getMpg = function() {
+
+                return mpg;
+            }
+            this.getMaxSpeed = function() {
+
+                return maxSpeed;
+            }
+        }
+		
+    
+	
+	</script>
+	</body>
+</html>

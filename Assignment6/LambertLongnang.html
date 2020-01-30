@@ -1,0 +1,118 @@
+<html>
+
+<head>
+
+    <title>Lambert Longnang's page</title>
+</head>
+
+<body bgcolor=" skyblue">
+
+    <center>
+        <h1>Lambert Longnang's Page </h1>
+
+    </center>
+    <center>
+        <div>
+            <h1><strong>Animal Quiz</strong></h1>
+            <p>Animal Quiz is full of interesting and weird facts about wildlife that will surprise you!</p>
+            <p>Find out how much you really know about wildlife by taking the quiz...</p>
+            <p>You can also use these interesting animal facts for Trivia night or to do your own board game <a href="https://www.livescience.com/11346-10-amazing-animals.html/" target="_blank">https://www.livescience.com</a></p>
+        </div>
+    </center>
+
+    <div class="container">
+        <main>
+            <form>
+                <p> <strong>Q1. What is the branch of biology called that is devoted to the study of animals?</strong><br>
+                    <div id="q1">
+                        <ol type="a">
+                            <div onclick=submitAnswer12()>
+                                <li>entomology</li>
+                            </div>
+                            <div onclick=submitAnswer11()>
+                                <li>zoology</li>
+                            </div>
+                            <div onclick=submitAnswer12()>
+                                <li>mammalogy</li>
+                            </div>
+                            <div id="q1answer"> <br> </div>
+
+                        </ol>
+                    </div>
+                </p>
+
+                <p> <strong>Q2. How many living species of animals have been identified?</strong><br>
+                    <div id="q2">
+                        <ol type="a">
+                            <div onclick=submitAnswer21()>
+                                <li>more than 10 million</li>
+                            </div>
+                            <div onclick=submitAnswer22()>
+                                <li>more than 1 million</li>
+                            </div>
+                            <div onclick=submitAnswer22()>
+                                <li>more than 100 million</li>
+                            </div>
+                            <div id="q2answer"> <br> </div>
+                        </ol>
+                    </div>
+                </p>
+
+                <p> <strong>Q3. which of these animals is a monkey?</strong><br>
+                    <div id="q3">
+                        <ol type="a">
+                            <div onclick=submitAnswer31()>
+                                <li> <img src="monkey.jpeg" alt="picture" width="150" height="150"></li>
+                            </div>
+                            <div onclick=submitAnswer32()>
+                                <li><img src="zebra.jpeg" alt="picture" width="150" height="150"></li>
+                            </div>
+                            <div onclick=submitAnswer32()>
+                                <li><img src="gorilla.jpeg" alt="picture" width="150" height="150"></li>
+                            </div>
+                            <div id="q3answer"> <br></div>
+                        </ol>
+                    </div>
+                </p>
+                <button onclick="reset()">reset</button>
+            </form>
+        </main>
+
+    </div>
+
+    <script>
+        function submitAnswer11() {
+            document.getElementById("q1answer").innerHTML = "correct";
+        }
+
+        function submitAnswer12() {
+            document.getElementById("q1answer").innerHTML = "incorrect";
+        }
+
+        function submitAnswer21() {
+            document.getElementById("q2answer").innerHTML = "correct";
+        }
+
+        function submitAnswer22() {
+            document.getElementById("q2answer").innerHTML = "incorrect";
+        }
+
+        function submitAnswer31() {
+            document.getElementById("q3answer").innerHTML = "correct";
+        }
+
+        function submitAnswer32() {
+            document.getElementById("q3answer").innerHTML = "incorrect";
+        }
+
+        function reset() {
+            document.getElementById("q1answer").innerHTML = "<br>";
+            document.getElementById("q2answer").innerHTML = "<br>";
+            document.getElementById("q3answer").innerHTML = "<br>";
+
+        }
+    </script>
+
+</body>
+
+</html>
